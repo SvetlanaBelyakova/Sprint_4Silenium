@@ -1,62 +1,81 @@
-import pageObjects.MainPage;
-import pageObjects.OrderPage;
-import pageObjects.RentPage;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+import pageobjects.MainPage;
+import pageobjects.OrderPage;
+import pageobjects.RentPage;
 
-import static org.junit.Assert.assertTrue;
 
+@RunWith(Parameterized.class)
 public class SamokatOrderingTest extends BaseTest {
 
-    //Тест заказа через кнопку в верхней части сайта
-    @Test
-    public void samokatOrderingByHeaderOrderButton() {
-        new MainPage(driver)
-                .openSite()
-                .clickCookieButton()
-                .clickHeaderOrderButton();
+    private final String firstName;
+    private final String lastName;
+    private final String deliveryAddress;
+    private final String metroStation;
+    private final String phoneNumber;
+    private final String rentalDate;
+    private final String color;
+    private final String comment;
 
-        new OrderPage(driver)
-                .sendClientFirstName("Маша")
-                .sendClientLastName("Иванова")
-                .sendDeliveryAddress("ул.Красная площадь, 9")
-                .selectMetroStation("Площадь Революции")
-                .sendDeliveryClientPhoneNumber("89998885566")
-                .clickNextButton();
-
-        boolean isDisplayed = new RentPage(driver)
-                .sendRentalDate("10.10.2024")
-                .setRentalTime()
-                .clickCheckBoxColourBlackPearl()
-                .sendComment("Пожалуйста, быстрее!!!")
-                .clickOrderButton()
-                .clickOrderButtonYes()
-                .isModalOrderWindowDisplayed();
-        assertTrue("Окно заказа не появилось?", isDisplayed);
+    public SamokatOrderingTest(String firstName, String lastName, String deliveryAddress, String metroStation,
+                               String phoneNumber, String rentalDate, String color, String comment) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.deliveryAddress = deliveryAddress;
+        this.metroStation = metroStation;
+        this.phoneNumber = phoneNumber;
+        this.rentalDate = rentalDate;
+        this.color = color;
+        this.comment = comment;
     }
-    // Тест заказа через кнопку в нижней части сайта
-    @Test
-    public void samokatOrderingByMiddleOrderButton() {
+
+    @Parameterized.Parameters
+    public static Object[][] getDateSetForOrder() {
+        return new Object[][] {
+                {"Маша", "Иванова", "ул.Красная площадь, 9", "Площадь Революции", "89998885566", "10.10.2024", "Чёрный жемчуг", "Пожалуйста, быстрее!!!"},
+                {"Василий", "Иномаркин", "ул.Ильинка, 4", "Китай-город", "895134416659", "08.09.2024", "Серый Отчаяние", "Опаздываю в автосалон!"},
+        };
+    }
+
+    @Before
+    public void setUp() {
         new MainPage(driver)
                 .openSite()
-                .clickCookieButton()
+                .clickCookieButton();
+    }
+
+    @Test
+    public void samokatOrdering() {
+        new MainPage(driver)
+                .clickHeaderOrderButton();
                 .clickMiddleOrderButton();
 
         new OrderPage(driver)
-                .sendClientFirstName("Василий")
-                .sendClientLastName("Иномаркин")
-                .sendDeliveryAddress("ул.Ильинка, 4")
-                .selectMetroStation("Китай-город")
-                .sendDeliveryClientPhoneNumber("895134416659")
+                .sendClientFirstName(firstName)
+                .sendClientLastName(lastName)
+                .sendDeliveryAddress(deliveryAddress)
+                .selectMetroStation(metroStation)
+                .sendDeliveryClientPhoneNumber(phoneNumber)
                 .clickNextButton();
 
-        boolean isDisplayed = new RentPage(driver)
-                .sendRentalDate("08.09.2024")
+        boolean isDisplayed;
+        if (new RentPage(driver)
+                .sendRentalDate(rentalDate)
                 .setRentalTime()
-                .clickCheckBoxColourGreyDespair()
-                .sendComment("Опаздываю в автосалон!")
+                .clickCheckBoxColourBlackPearl(color)
+                .clickCheckBoxColourGreyDespair(color)
+                .sendComment(comment)
                 .clickOrderButton()
                 .clickOrderButtonYes()
-                .isModalOrderWindowDisplayed();
-        assertTrue("Нет окна заказа!", isDisplayed);
+                .checkOrderMessage()
+                .isModalOrderWindowDisplayed()) isDisplayed = true;
+        else isDisplayed = false;
+
+        Assert.assertTrue("Нет окна заказа!", isDisplayed);
     }
+
+
 }
