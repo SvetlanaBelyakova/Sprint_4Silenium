@@ -51,7 +51,7 @@ public class SamokatOrderingTest extends BaseTest {
     public void samokatOrdering() {
         new MainPage(driver)
                 .clickHeaderOrderButton();
-                .clickMiddleOrderButton();
+
 
         new OrderPage(driver)
                 .sendClientFirstName(firstName)

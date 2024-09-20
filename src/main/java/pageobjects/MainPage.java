@@ -13,11 +13,11 @@ import static org.junit.Assert.assertEquals;
 
 //Элементы главной страницы сайта
 public class MainPage {
-    public MainPage(WebDriver driver) {
+    public MainPage(WebDriver driver){
         MainPage.driver = driver;
     }
 
-    private WebDriver driver;
+    private static WebDriver driver;
 
     //Локатор кнопки "да все привыкли" сообщения о кукисах
     private final By cookieButton = By.id("rcc-confirm-button");
@@ -83,14 +83,14 @@ public class MainPage {
     }
 
     //Клик по стрелке выпадающего списка
-    public void clickQuestionArrow(int questionNumber) {
+    public static void clickQuestionArrow(int questionNumber) {
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.elementToBeClickable(By.id( DROP_DOWN_QUESTIONS_ARRAY[questionNumber])));
         driver.findElement(By.id( DROP_DOWN_QUESTIONS_ARRAY[questionNumber])).click();
     }
 
     //Проверка текста в открытой панели
-    public void checkTextInOpenPanel(String expectedText, int answerNumber) {
+    public static void checkTextInOpenPanel(String expectedText, int answerNumber) {
         new WebDriverWait(driver, Duration.ofSeconds(5))
                 .until(ExpectedConditions.visibilityOfElementLocated(By.id( DROP_DOWN_ANSWERS_ARRAY[answerNumber])));
         String answerText = driver.findElement(By.id( DROP_DOWN_ANSWERS_ARRAY[answerNumber])).getText();
