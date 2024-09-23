@@ -13,11 +13,11 @@ import static org.junit.Assert.assertEquals;
 
 //Элементы главной страницы сайта
 public class MainPage {
-    public MainPage(WebDriver driver){
-        MainPage.driver = driver;
-    }
+    private final WebDriver driver;
 
-    private static WebDriver driver;
+    public MainPage(WebDriver driver) {
+        this.driver = driver;
+    }
 
     //Локатор кнопки "да все привыкли" сообщения о кукисах
     private final By cookieButton = By.id("rcc-confirm-button");
@@ -54,7 +54,7 @@ public class MainPage {
     //Открыть сайт
     public static final String SITE_URL = "https://qa-scooter.praktikum-services.ru/";
 
-    public final MainPage openSite() {
+    public  MainPage openSite() {
         driver.get(SITE_URL);
         return this;
     }
@@ -66,7 +66,7 @@ public class MainPage {
     }
 
     //Кликнуть по кнопке заказа
-    public void clickHeaderOrderButton() {
+    public  void clickHeaderOrderButton() {
         driver.findElement(headerOrderButton).click();
     }
 
@@ -83,18 +83,18 @@ public class MainPage {
     }
 
     //Клик по стрелке выпадающего списка
-    public static void clickQuestionArrow(int questionNumber) {
+    public void clickQuestionArrow(int questionIndex) {
         new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.elementToBeClickable(By.id( DROP_DOWN_QUESTIONS_ARRAY[questionNumber])));
-        driver.findElement(By.id( DROP_DOWN_QUESTIONS_ARRAY[questionNumber])).click();
+                .until(ExpectedConditions.elementToBeClickable(By.id( DROP_DOWN_QUESTIONS_ARRAY[questionIndex])));
+        driver.findElement(By.id( DROP_DOWN_QUESTIONS_ARRAY[questionIndex])).click();
     }
 
     //Проверка текста в открытой панели
-    public static void checkTextInOpenPanel(String expectedText, int answerNumber) {
+    public void checkTextInOpenPanel(String expectedAnswer, int questionIndex) {
         new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOfElementLocated(By.id( DROP_DOWN_ANSWERS_ARRAY[answerNumber])));
-        String answerText = driver.findElement(By.id( DROP_DOWN_ANSWERS_ARRAY[answerNumber])).getText();
-        assertEquals(expectedText, answerText);
+                .until(ExpectedConditions.visibilityOfElementLocated(By.id( DROP_DOWN_ANSWERS_ARRAY[questionIndex])));
+        String answerText = driver.findElement(By.id( DROP_DOWN_ANSWERS_ARRAY[questionIndex])).getText();
+        assertEquals(expectedAnswer, answerText);
     }
 
     //Клик по кнопке вопроса

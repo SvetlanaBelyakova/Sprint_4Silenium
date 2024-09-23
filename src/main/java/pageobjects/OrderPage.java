@@ -21,13 +21,18 @@ public class OrderPage { private final WebDriver driver;
     private final By deliveryClientPhoneNumber = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
 
     //Локатор кнопки "Далее"
-    private final By NextButton = By.xpath(".//button[(@class ='Button_Button__ra12g Button_Middle__1CSJM' and text()='Далее')]");
+    private final By nextButton = By.xpath(".//button[(@class ='Button_Button__ra12g Button_Middle__1CSJM' and text()='Далее')]");
+    //Локатор кнопки "да все привыкли" сообщения о кукисах
+    private final By cookieButton = By.id("rcc-confirm-button");
 
     //Конструктор класса
     public OrderPage (WebDriver driver) {
         this.driver = driver;
     }
-
+    // Метод для принятия куки
+    public void clickCookieButton() {
+        driver.findElement(cookieButton).click();
+    }
     //Ввод имени
     public OrderPage sendClientFirstName(String firstName) {
         driver.findElement(clientFirstName).sendKeys(firstName);
@@ -61,7 +66,7 @@ public class OrderPage { private final WebDriver driver;
 
     // Клик по кнопке "Далее"
     public void clickNextButton() {
-        driver.findElement(NextButton).click();
+        driver.findElement(nextButton).click();
     }
 
 }

@@ -3,9 +3,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import pageobjects.MainPage;
 import pageobjects.OrderPage;
 import pageobjects.RentPage;
+
+
 
 
 @RunWith(Parameterized.class)
@@ -42,40 +45,38 @@ public class SamokatOrderingTest extends BaseTest {
 
     @Before
     public void setUp() {
+        driver = new FirefoxDriver();
         new MainPage(driver)
                 .openSite()
-                .clickCookieButton();
+                .clickCookieButton()
+                .scrollPageToEndOfList()
+                .clickQuestionArrow(questionIndex)
+                .checkTextInOpenPanel(expectedAnswer, questionIndex);
     }
+
 
     @Test
     public void samokatOrdering() {
-        new MainPage(driver)
-                .clickHeaderOrderButton();
-
-
-        new OrderPage(driver)
-                .sendClientFirstName(firstName)
+       MainPage.clickHeaderOrderButton();
+      MainPage.clickMiddleOrderButton();
+        OrderPage orderPage = new OrderPage(driver);
+        orderPage.sendClientFirstName(firstName)
                 .sendClientLastName(lastName)
                 .sendDeliveryAddress(deliveryAddress)
                 .selectMetroStation(metroStation)
                 .sendDeliveryClientPhoneNumber(phoneNumber)
                 .clickNextButton();
 
-        boolean isDisplayed;
-        if (new RentPage(driver)
+        RentPage rentPage = new RentPage(driver)
                 .sendRentalDate(rentalDate)
                 .setRentalTime()
                 .clickCheckBoxColourBlackPearl(color)
                 .clickCheckBoxColourGreyDespair(color)
                 .sendComment(comment)
                 .clickOrderButton()
-                .clickOrderButtonYes()
-                .checkOrderMessage()
-                .isModalOrderWindowDisplayed()) isDisplayed = true;
-        else isDisplayed = false;
+                .clickOrderButtonYes();
 
-        Assert.assertTrue("Нет окна заказа!", isDisplayed);
+        Assert.assertTrue("Нет окна заказа!", rentPage.checkOrderMessage().isModalOrderWindowDisplayed());
     }
-
 
 }

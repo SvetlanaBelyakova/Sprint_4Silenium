@@ -33,12 +33,11 @@ public class DownListTest extends BaseTest {
 
     @Test
     public void checkDownListText() {
-        new MainPage(driver)
-                .openSite()
+        MainPage mainPage = new MainPage(driver);
+        mainPage.openSite()
                 .clickCookieButton()
-                .scrollPageToEndOfList();
-
-        MainPage.clickQuestionArrow(questionIndex);
-        MainPage.checkTextInOpenPanel(expectedAnswer, questionIndex);
+                .scrollPageToEndOfList()
+                .clickQuestionArrow(questionIndex)
+                .checkTextInOpenPanel(expectedAnswer, questionIndex);
     }
 }
