@@ -3,6 +3,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -87,6 +89,26 @@ public class RentPage {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         WebElement orderMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("Order_ModalHeader__3FDaJ")));
         assertEquals("Заказ оформлен", orderMessage.getText());
+        return this;
+    }
+    public RentPage checkOrderMessageFireFox() {
+        // Установка пути к GeckoDriver
+        System.setProperty("webdriver.gecko.driver", "/path/to/geckodriver");
+
+        // Настройка параметров браузера
+        FirefoxOptions options = new FirefoxOptions();
+        options.addPreference("browser.startup.homepage", "about:blank");
+        options.addPreference("startup.homepage_welcome_url", "about:blank");
+        options.addPreference("startup.homepage_welcome_url.additional", "about:blank");
+
+        // Создание экземпляра WebDriver для Firefox
+        WebDriver driver = new FirefoxDriver(options);
+
+        // Ожидание и проверка сообщения о заказе
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebElement orderMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("Order_ModalHeader__3FDaJ")));
+        assertEquals("Заказ оформлен", orderMessage.getText());
+
         return this;
     }
     //Клик по кнопке "Да" оформления заказа

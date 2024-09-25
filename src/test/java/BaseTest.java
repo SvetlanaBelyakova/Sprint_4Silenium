@@ -8,6 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 
+
 import java.time.Duration;
 
 public class BaseTest {
@@ -23,10 +24,11 @@ public class BaseTest {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait( Duration.ofSeconds(5));
 
-        FirefoxOptions options = new FirefoxOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        WebDriverManager.firefoxdriver().setup();
-        driver = new FirefoxDriver(options);
+        //FirefoxOptions options = new FirefoxOptions();
+//        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
+//        WebDriverManager.firefoxdriver().setup();
+//        driver = new FirefoxDriver(options);
+
     }
     //Закрыть браузер
     @After

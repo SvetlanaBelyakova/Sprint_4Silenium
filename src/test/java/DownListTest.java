@@ -36,8 +36,8 @@ public class DownListTest extends BaseTest {
         MainPage mainPage = new MainPage(driver);
         mainPage.openSite()
                 .clickCookieButton()
-                .scrollPageToEndOfList()
-                .clickQuestionArrow(questionIndex)
-                .checkTextInOpenPanel(expectedAnswer, questionIndex);
+                .scrollPageToEndOfList();
+                MainPage.clickQuestionArrow(questionIndex);
+                MainPage.checkTextInOpenPanel(expectedAnswer, questionIndex);
     }
 }

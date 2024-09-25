@@ -20,13 +20,13 @@ public class MainPage {
     }
 
     //Локатор кнопки "да все привыкли" сообщения о кукисах
-    private final By cookieButton = By.id("rcc-confirm-button");
+    private static final By cookieButton = By.id("rcc-confirm-button");
 
     //Локатор Кнопки заказа в хэдере сайта
-    private final By headerOrderButton = By.className("Button_Button__ra12g");
+    private static final By headerOrderButton = By.className("Button_Button__ra12g");
 
     //Локатор кнопки заказа в середине сайта
-    private final By middleOrderButton = By.className("Button_Middle__1CSJM");
+    private static final By middleOrderButton = By.className("Button_Middle__1CSJM");
 
     //Массив локаторов кнопок с вопросами
     private static final String[] DROP_DOWN_QUESTIONS_ARRAY = new String[]{
@@ -66,7 +66,7 @@ public class MainPage {
     }
 
     //Кликнуть по кнопке заказа
-    public  void clickHeaderOrderButton() {
+    public void clickHeaderOrderButton() {
         driver.findElement(headerOrderButton).click();
     }
 

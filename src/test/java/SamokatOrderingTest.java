@@ -11,6 +11,7 @@ import pageobjects.RentPage;
 
 
 
+
 @RunWith(Parameterized.class)
 public class SamokatOrderingTest extends BaseTest {
 
@@ -46,21 +47,22 @@ public class SamokatOrderingTest extends BaseTest {
     @Before
     public void setUp() {
         driver = new FirefoxDriver();
+        int questionIndex = 0;
         new MainPage(driver)
                 .openSite()
                 .clickCookieButton()
                 .scrollPageToEndOfList()
-                .clickQuestionArrow(questionIndex)
-                .checkTextInOpenPanel(expectedAnswer, questionIndex);
+                .clickQuestionArrow(questionIndex);
     }
 
 
     @Test
     public void samokatOrdering() {
-       MainPage.clickHeaderOrderButton();
-      MainPage.clickMiddleOrderButton();
-        OrderPage orderPage = new OrderPage(driver);
-        orderPage.sendClientFirstName(firstName)
+        MainPage.clickHeaderOrderButton();
+        MainPage.clickMiddleOrderButton();
+
+        new OrderPage(driver);
+        OrderPage.sendClientFirstName(firstName)
                 .sendClientLastName(lastName)
                 .sendDeliveryAddress(deliveryAddress)
                 .selectMetroStation(metroStation)
@@ -77,6 +79,8 @@ public class SamokatOrderingTest extends BaseTest {
                 .clickOrderButtonYes();
 
         Assert.assertTrue("Нет окна заказа!", rentPage.checkOrderMessage().isModalOrderWindowDisplayed());
+        Assert.assertTrue("Заказ оформлен", rentPage.checkOrderMessageFireFox().isModalOrderWindowDisplayed());
+
     }
 
 }

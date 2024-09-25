@@ -11,7 +11,7 @@ import static org.junit.Assert.assertEquals;
 public class ParamTest extends BaseTest {
 
     private final String questionLocator;
-    private final String answerLocator;
+    private String answerLocator;
     private final String answerText;
 
 
@@ -37,7 +37,7 @@ public class ParamTest extends BaseTest {
     }
     //Сравнение текста ответа
     @Test
-    public void dropDownListTest() {
+    public void DownListTest() {
         new MainPage(driver)
                 .openSite()
                 .clickCookieButton()
@@ -45,7 +45,7 @@ public class ParamTest extends BaseTest {
                 .clickQuestionButton(questionLocator);
 
         new MainPage(driver);
-        String actualAnswerText = driver.findElement(By.id(answerLocator)).getText();
-        assertEquals("Текст в ответе не соответствует ожидаемому тексту.", answerText, actualAnswerText);
+        String ActualAnswerText = driver.findElement(By.id(answerLocator)).getText();
+        assertEquals("Текст в ответе не соответствует ожидаемому тексту.", answerText, ActualAnswerText);
     }
 }
