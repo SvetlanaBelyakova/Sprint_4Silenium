@@ -2,11 +2,7 @@ package pageobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import static org.junit.Assert.assertEquals;
 
 public class RentPage {
@@ -29,15 +25,9 @@ public class RentPage {
     private final By orderButton = By.xpath(".//button[(@class='Button_Button__ra12g Button_Middle__1CSJM' and text()='Заказать')]");
     //Локатор кнопки "Да" оформления заказа
     private final By orderButtonYes = By.xpath(".//*[@id='root']/div/div[2]/div[5]/div[2]/button[2]");
-    //Локатор модального окна
-    private final By modalOrderWindow = By.xpath(".//div[contains(@class, 'Order_ModalHeader')]");
+    //Локатор всплывающего окна с подтверждением заказа
+    private final By orderPlaced = By.xpath(".//div[@class='Order_ModalHeader__3FDaJ']");
 
-
-    //Модальное окно "Заказ Оформлен"
-    public boolean isModalOrderWindowDisplayed() {
-
-        return driver.findElement(modalOrderWindow).isDisplayed();
-    }
 
     //Конструктор класса
     public RentPage(WebDriver driver) {
@@ -84,18 +74,15 @@ public class RentPage {
         driver.findElement(orderButton).click();
         return this;
     }
-    //Получение сообщения "Заказ оформлен"
-    public RentPage checkOrderMessage() {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        WebElement orderMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'Order_ModalHeader__3FDaJ')]")));
-        assertEquals("Заказ оформлен", orderMessage.getText());
-        return this;
-    }
-
     //Клик по кнопке "Да" оформления заказа
     public RentPage clickOrderButtonYes() {
         driver.findElement(orderButtonYes).click();
         return this;
     }
+    //Получение сообщения "Заказ оформлен"
+    public String getOrderPlacedText() {
+        return driver.findElement(orderPlaced).getText();
+    }
+    }
 
-}
+

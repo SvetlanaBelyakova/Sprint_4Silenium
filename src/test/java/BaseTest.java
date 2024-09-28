@@ -12,23 +12,22 @@ public class BaseTest {
     //Выбор браузера
     @Before
     public void setUp() {
-  //      WebDriverManager.chromedriver().setup();
-   //     driver = new ChromeDriver();
-   //    driver.manage().window().maximize();
-  //     driver.manage().timeouts().implicitlyWait( Duration.ofSeconds(5));
+        //      WebDriverManager.chromedriver().setup();
+        //     driver = new ChromeDriver();
+        //    driver.manage().window().maximize();
+        //     driver.manage().timeouts().implicitlyWait( Duration.ofSeconds(5));
 
 
-
-     WebDriverManager.firefoxdriver().create();
-       driver = new FirefoxDriver();
-       driver.manage().timeouts().implicitlyWait( Duration.ofSeconds(5));
+        WebDriverManager.firefoxdriver().setup();
+        driver = new FirefoxDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
     }
+
     //Закрыть браузер
     @After
     public void tearDown() {
-        if(driver != null){
+        if (driver != null) {
             driver.quit();
         }
     }
-
 }
