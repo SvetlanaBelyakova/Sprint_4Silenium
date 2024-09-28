@@ -3,12 +3,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
-
-
-
 import java.time.Duration;
 
 public class BaseTest {
@@ -17,18 +12,16 @@ public class BaseTest {
     //Выбор браузера
     @Before
     public void setUp() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait( Duration.ofSeconds(5));
+  //      WebDriverManager.chromedriver().setup();
+   //     driver = new ChromeDriver();
+   //    driver.manage().window().maximize();
+  //     driver.manage().timeouts().implicitlyWait( Duration.ofSeconds(5));
 
-        //FirefoxOptions options = new FirefoxOptions();
-//        options.addArguments("--no-sandbox", "--headless", "--disable-dev-shm-usage");
-//        WebDriverManager.firefoxdriver().setup();
-//        driver = new FirefoxDriver(options);
 
+
+     WebDriverManager.firefoxdriver().create();
+       driver = new FirefoxDriver();
+       driver.manage().timeouts().implicitlyWait( Duration.ofSeconds(5));
     }
     //Закрыть браузер
     @After

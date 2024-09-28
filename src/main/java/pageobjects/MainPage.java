@@ -20,13 +20,13 @@ public class MainPage {
     }
 
     //Локатор кнопки "да все привыкли" сообщения о кукисах
-    private static final By cookieButton = By.id("rcc-confirm-button");
+    private static final By COOKIE_BUTTON = By.id("rcc-confirm-button");
 
     //Локатор Кнопки заказа в хэдере сайта
-    private static final By headerOrderButton = By.className("Button_Button__ra12g");
+    private static final By HEADER_ORDER_BUTTON = By.className("Button_Button__ra12g");
 
     //Локатор кнопки заказа в середине сайта
-    private static final By middleOrderButton = By.className("Button_Middle__1CSJM");
+    private static final By MIDDLE_ORDER_BUTTON = By.className("Button_Middle__1CSJM");
 
     //Массив локаторов кнопок с вопросами
     private static final String[] DROP_DOWN_QUESTIONS_ARRAY = new String[]{
@@ -54,32 +54,32 @@ public class MainPage {
     //Открыть сайт
     public static final String SITE_URL = "https://qa-scooter.praktikum-services.ru/";
 
-    public  MainPage openSite() {
+    public  MainPage open() {
         driver.get(SITE_URL);
         return this;
     }
 
     //Кликнуть по кнопке "да все привыкли"
     public pageobjects.MainPage clickCookieButton() {
-        driver.findElement(cookieButton).click();
+        driver.findElement(COOKIE_BUTTON).click();
         return this;
     }
 
     //Кликнуть по кнопке заказа
     public void clickHeaderOrderButton() {
-        driver.findElement(headerOrderButton).click();
+        driver.findElement(HEADER_ORDER_BUTTON).click();
     }
 
     //Кликнуть по кнопке заказа в середине сайта
     public void clickMiddleOrderButton() {
-        driver.findElement(middleOrderButton).click();
+        driver.findElement(MIDDLE_ORDER_BUTTON).click();
     }
 
     //Прокрутка главной страницы до последнего элемента списка
-    public MainPage scrollPageToEndOfList() {
+    public void scrollPageToEndOfList() {
         WebElement lastQuestionArrow = driver.findElement(By.id( DROP_DOWN_QUESTIONS_ARRAY[7]));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", lastQuestionArrow);
-        return this;
+
     }
 
     //Клик по стрелке выпадающего списка
@@ -98,9 +98,9 @@ public class MainPage {
     }
 
     //Клик по кнопке вопроса
-    public void clickQuestionButton(String questionButtonLocator) {
+    public void clickQuestionButton(String questionLocator) {
         new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.elementToBeClickable(By.id(questionButtonLocator)));
-        driver.findElement(By.id(questionButtonLocator)).click();
+                .until(ExpectedConditions.elementToBeClickable(By.id(questionLocator)));
+        driver.findElement(By.id(questionLocator)).click();
     }
 }

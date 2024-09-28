@@ -3,13 +3,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-
 import static org.junit.Assert.assertEquals;
 
 public class RentPage {
@@ -38,11 +35,13 @@ public class RentPage {
 
     //Модальное окно "Заказ Оформлен"
     public boolean isModalOrderWindowDisplayed() {
+
         return driver.findElement(modalOrderWindow).isDisplayed();
     }
 
     //Конструктор класса
     public RentPage(WebDriver driver) {
+
         this.driver = driver;
     }
 
@@ -53,6 +52,7 @@ public class RentPage {
         driver.findElement(rentalDateField).sendKeys(Keys.ENTER);
         return this;
     }
+
 
     //Ввод срока аренды
     public RentPage setRentalTime() {
@@ -87,30 +87,11 @@ public class RentPage {
     //Получение сообщения "Заказ оформлен"
     public RentPage checkOrderMessage() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        WebElement orderMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("Order_ModalHeader__3FDaJ")));
+        WebElement orderMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[contains(@class, 'Order_ModalHeader__3FDaJ')]")));
         assertEquals("Заказ оформлен", orderMessage.getText());
         return this;
     }
-    public RentPage checkOrderMessageFireFox() {
-        // Установка пути к GeckoDriver
-        System.setProperty("webdriver.gecko.driver", "/path/to/geckodriver");
 
-        // Настройка параметров браузера
-        FirefoxOptions options = new FirefoxOptions();
-        options.addPreference("browser.startup.homepage", "about:blank");
-        options.addPreference("startup.homepage_welcome_url", "about:blank");
-        options.addPreference("startup.homepage_welcome_url.additional", "about:blank");
-
-        // Создание экземпляра WebDriver для Firefox
-        WebDriver driver = new FirefoxDriver(options);
-
-        // Ожидание и проверка сообщения о заказе
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        WebElement orderMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("Order_ModalHeader__3FDaJ")));
-        assertEquals("Заказ оформлен", orderMessage.getText());
-
-        return this;
-    }
     //Клик по кнопке "Да" оформления заказа
     public RentPage clickOrderButtonYes() {
         driver.findElement(orderButtonYes).click();

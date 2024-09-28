@@ -3,7 +3,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
-public class OrderPage { private final WebDriver driver;
+public class OrderPage {
+    private final WebDriver driver;
 
 
     private final By clientFirstName = By.xpath(".//input[@placeholder='* Имя']");
@@ -24,9 +25,9 @@ public class OrderPage { private final WebDriver driver;
     private final By nextButton = By.xpath(".//button[(@class ='Button_Button__ra12g Button_Middle__1CSJM' and text()='Далее')]");
     //Локатор кнопки "да все привыкли" сообщения о кукисах
     private final By cookieButton = By.id("rcc-confirm-button");
-
     //Конструктор класса
     public OrderPage (WebDriver driver) {
+
         this.driver = driver;
     }
     // Метод для принятия куки
@@ -66,6 +67,7 @@ public class OrderPage { private final WebDriver driver;
 
     // Клик по кнопке "Далее"
     public void clickNextButton() {
+
         driver.findElement(nextButton).click();
     }
 

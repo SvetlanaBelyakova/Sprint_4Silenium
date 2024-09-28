@@ -1,16 +1,10 @@
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import pageobjects.MainPage;
 import pageobjects.OrderPage;
 import pageobjects.RentPage;
-
-
-
-
 
 @RunWith(Parameterized.class)
 public class SamokatOrderingTest extends BaseTest {
@@ -43,26 +37,15 @@ public class SamokatOrderingTest extends BaseTest {
                 {"Василий", "Иномаркин", "ул.Ильинка, 4", "Китай-город", "895134416659", "08.09.2024", "Серый Отчаяние", "Опаздываю в автосалон!"},
         };
     }
-
-    @Before
-    public void setUp() {
-        driver = new FirefoxDriver();
-        int questionIndex = 0;
-        new MainPage(driver)
-                .openSite()
-                .clickCookieButton()
-                .scrollPageToEndOfList()
-                .clickQuestionArrow(questionIndex);
-    }
-
-
     @Test
     public void samokatOrdering() {
-        MainPage.clickHeaderOrderButton();
-        MainPage.clickMiddleOrderButton();
+        MainPage mainPage = new MainPage(driver);
+        mainPage.open();
+        mainPage.clickHeaderOrderButton();
+        mainPage.clickMiddleOrderButton();
 
-        new OrderPage(driver);
-        OrderPage.sendClientFirstName(firstName)
+        OrderPage orderPage = new OrderPage(driver);
+        orderPage.sendClientFirstName(firstName)
                 .sendClientLastName(lastName)
                 .sendDeliveryAddress(deliveryAddress)
                 .selectMetroStation(metroStation)
@@ -79,7 +62,6 @@ public class SamokatOrderingTest extends BaseTest {
                 .clickOrderButtonYes();
 
         Assert.assertTrue("Нет окна заказа!", rentPage.checkOrderMessage().isModalOrderWindowDisplayed());
-        Assert.assertTrue("Заказ оформлен", rentPage.checkOrderMessageFireFox().isModalOrderWindowDisplayed());
 
     }
 
